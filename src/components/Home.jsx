@@ -3,6 +3,7 @@ import axios from 'axios';
 import Card from './Card';
 const Home = () => {
     const [data, setData] = useState([]);
+    const [searchTitle, setSearchTitle] = useState('');
 
     const fetchData = async () => {
         try {
@@ -17,13 +18,21 @@ const Home = () => {
         fetchData();
     }, [])
 
-    const myData = data.map((news) => (
+    const filteredData = data.filter((news) => {
+        if (!searchTitle.trim()) {
+            return news
+        } else if (news.title.toLowerCase().includes(searchTitle.toLowerCase())) {
+            return news
+        }
+    }).map((news) => (
         <Card key={news.id} id={news.id} image={news.imageUrl} title={news.title} site={news.newsSite} summary={news.summary} date={news.updatedAt} />
     ))
-    console.log(data)
+
+
     return (
         <div>
-            {myData}
+            <input type="text" value={searchTitle} onChange={(e) => setSearchTitle(e.target.value)} />
+            {filteredData}
         </div>
     )
 }

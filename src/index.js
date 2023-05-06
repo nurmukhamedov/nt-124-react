@@ -5,14 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18next';
 import { BrowserRouter } from 'react-router-dom';
+import { MyProvider } from './Lesson-54/components/ExampleContext';
+import { FetchProvider } from './Lesson-54/components/FetchContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Suspense fallback={<div>Loading....</div>}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Suspense>
+    <BrowserRouter>
+      <FetchProvider>
+        <MyProvider>
+          <App />
+        </MyProvider>
+      </FetchProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
